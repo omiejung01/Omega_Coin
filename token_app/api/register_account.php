@@ -21,21 +21,27 @@ function fill_zero($number, $target) {
 // Check duplication
 
 function is_duplicate($acc_name, $conn3) {
-	$sql3 = "SELECT account_id FROM account WHERE account_name LIKE '" . $acc_name . "' AND void = 0 ";
+	$sql3 = "SELECT account_id FROM account WHERE account_name LIKE ? AND void = 0 ";
 	//print($sql3);
-	$result3 = $conn3->query($sql3);
+	//$result3 = $conn3->query($sql3);
 	
+	$stmt3 = $conn3->prepare($sql3);
+	$stmt3->bind_param('s', $acc_name);
+	$stmt3->execute();
+    $result3 = $stmt3->get_result();
+
 	$found = false;
 	if ($result3->num_rows > 0) {
 		$found = true;
-	} 
+	}
+	$stmt3->close();
+		
 	return $found;
 }
 
 $account_name = htmlspecialchars($_GET["account_name"]);
 $account_type = htmlspecialchars($_GET["account_type"]);
 $remarks = htmlspecialchars($_GET["remarks"]);
-
 
 if (is_duplicate($account_name, $conn)) {
 	$duplicate = "Account name is already existed.";
@@ -44,10 +50,10 @@ if (is_duplicate($account_name, $conn)) {
 	exit();
 }
 
+$output = ["result" => "Error2"];
 
 // generate new ID 
 $sql = "SELECT account_id FROM account ORDER BY account_id ";
-
 $result = $conn->query($sql);
 
 $id = "";
@@ -65,37 +71,29 @@ if ($result->num_rows > 0) {
 	$id = "ACC" . fill_zero(intval($num), 11);
 	 
 } else {
-	
-	
-
 	$id = "ACC00000000001";
 }
 
-$sql2 = "INSERT INTO account (account_id,account_name,account_type,remarks) VALUES ('$id','$account_name','$account_type','$remarks');";
-//echo $id;
-if ($conn->query($sql2) === TRUE) {
-  $result = ["id" => $id, "result" => "Success"];
+$output = ["id" => $id, "result" => "Error3"];
+
+//$sql2 = "INSERT INTO account (account_id,account_name,account_type,remarks) VALUES ('$id','$account_name','$account_type','$remarks');";
+$sql2 = "INSERT INTO account (account_id,account_name,account_type,remarks) VALUES (?,?,?,?);";
+
+
+$stmt2 = $conn->prepare($sql2);
+$stmt2->bind_param('ssss', $id, $account_name, $account_type, $remarks);
+
+if ($stmt2->execute()) {
+
+	//echo $id;
+	//if ($conn->query($sql2) === TRUE) {
+	$output = ["id" => $id, "result" => "Success"];
 } else {
-  $result = "Error: " . $sql2 . "<br>" . $conn->error;
-  //$result = ["result" => "Not success"];
-  
+	$output = ["result" => "Error"];
 }
 
-echo json_encode($result);
-
-
-
-
-//echo json_encode(["message" => "User added successfully"]);
-
-//$data = "Rex Lapis"; 
-//$key = "vagomundo";
-
-// Calculate the SHA256 hash
-//$hash = hash_hmac('sha256', $data,$key);
-
-//echo "SHA256 hash of '$data': " . $hash . "\n";	
-
+$stmt2->close();
+echo json_encode($output);
 
 
 ?>

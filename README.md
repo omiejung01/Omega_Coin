@@ -24,5 +24,13 @@ if ($conn->connect_error) {
 ?>
 ```
 
+# Database
+Account table
+
+Transfer table
+
+Realm table
+
+
 # todo
 Profile picture with media server, and upload panel to media server. Create group chat only one-to-one
