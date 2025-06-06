@@ -4,6 +4,7 @@ require("../db.inc.php");
 header("Content-Type: application/json");
 
 function account_balance($acc_id, $conn3) {
+	/*
 	$sql3 = "SELECT to_account, amount FROM transfer WHERE to_account LIKE '" . $acc_id . "' AND void = 0 ";
 	//print($sql3);
 	
@@ -22,6 +23,9 @@ function account_balance($acc_id, $conn3) {
 	while($row = $result4->fetch_assoc()) {
     	$from_amount += $row["amount"];
   	}
+	*/
+	
+	$stmt3->close();
 	
 	return $to_amount - $from_amount;	
 }

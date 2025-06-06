@@ -3,69 +3,70 @@ require("../db.inc.php");
 error_reporting(E_ALL);
 header("Content-Type: application/json");
 
-/*
-function fill_zero($number, $target) {
-	$str_num = "" . $number;
+function is_existed($acc_id, $conn3) {
 	
-	$len = strlen($str_num);
-	$num_zero = $target - $len;
-	
-	$result = "";
-	
-	for ($i = 0; $i < $num_zero; $i++) {	
-		$result .= "0";
+	$sql3 = "SELECT account_id FROM account WHERE account_id LIKE ? AND void = 0";
+	$found = false; 
+
+	if ($stmt3 = $conn3->prepare($sql3)) {
+		$stmt3->bind_param("s", $acc_id);
+		$stmt3->execute();
+		$result3 = $stmt3->get_result();
+		if ($result3->num_rows > 0) {
+			$found = true;
+		}
+		$stmt3->close();
+	} else {
+		echo "Error preparing statement: " . $conn3->error;
 	}
 	
-	return $result . $number;
-}
-*/
-
-
-// Check duplication
-function is_existed($acc_id, $conn3) {
-	$sql3 = "SELECT account_id FROM account WHERE account_id LIKE '" . $acc_id . "' AND void = 0 ";
-	//print($sql3);
-	$result3 = $conn3->query($sql3);
-	
-	$found = false;
-	if ($result3->num_rows > 0) {
-		$found = true;
-	} 
 	return $found;
 }
 
+
 function account_balance($acc_id, $conn3,&$account_name,&$account_type) {
-	$sql3 = "SELECT to_account, amount FROM transfer WHERE to_account LIKE '" . $acc_id . "' AND void = 0 ";
-	//print($sql3);
-	
-	$result3 = $conn3->query($sql3);
+	$sql3 = "SELECT to_account, amount FROM transfer WHERE to_account LIKE ? AND void = 0";
 	$to_amount = 0;
+
+	if ($stmt3 = $conn3->prepare($sql3)) {
+		$stmt3->bind_param("s", $acc_id);
+		$stmt3->execute();
+		$result3 = $stmt3->get_result();
+		while ($row3 = $result3->fetch_assoc()) {
+			//echo "To Account: " . $row['to_account'] . ", Amount: " . $row['amount'] . "<br>";
+			$to_amount += $row3["amount"];
+		}
+		$stmt3->close();
+	}
 	
-	while($row = $result3->fetch_assoc()) {
-    	$to_amount += $row["amount"];
-  	}
-	
-	$sql4 = "SELECT from_account, amount FROM transfer WHERE from_account LIKE '" . $acc_id . "' AND void = 0 ";
-	//print($sql3);
-	$result4 = $conn3->query($sql4);
+	$sql4 = "SELECT from_account, amount FROM transfer WHERE from_account LIKE ? AND void = 0";
 	$from_amount = 0;
-	
-	while($row = $result4->fetch_assoc()) {
-    	$from_amount += $row["amount"];
-  	}
+	if ($stmt4 = $conn3->prepare($sql4)) {
+		$stmt4->bind_param("s", $acc_id);
+		$stmt4->execute();
+		$result4 = $stmt4->get_result();
+		
+		while ($row4 = $result4->fetch_assoc()) {
+			//echo "To Account: " . $row['to_account'] . ", Amount: " . $row['amount'] . "<br>";
+			$from_amount += $row4["amount"];
+		}
+		$stmt4->close();
+	}
 	
 	//check account type
-	//$account_type = "";
-	$sql5 = "SELECT account_id, account_type, account_name FROM account WHERE account_id LIKE '" . $acc_id . "' AND void = 0 ";
-	//print($sql3);
-	$result5 = $conn3->query($sql5);
-	
-	while($row = $result5->fetch_assoc()) {
-    	$account_type= $row["account_type"];
-    	$account_name= $row["account_name"];
-    	
-  	}
+	$sql5 = "SELECT account_id, account_type, account_name FROM account WHERE account_id LIKE ? AND void = 0 ";
+	if ($stmt5 = $conn3->prepare($sql5)) {
+		$stmt5->bind_param("s", $acc_id);
+		$stmt5->execute();
+		$result5 = $stmt5->get_result();
 		
+		while ($row5 = $result5->fetch_assoc()) {
+			$account_type= $row5["account_type"];
+			$account_name= $row5["account_name"];			
+		}
+		$stmt5->close();	
+	}
+	
 	$balance = 0;
 	
 	if ($account_type == "Asset") {
@@ -77,19 +78,22 @@ function account_balance($acc_id, $conn3,&$account_name,&$account_type) {
 	return $balance;
 }
 
+
+//$output = ["result" => "Error2"];
+
 $account_id = htmlspecialchars($_GET["account_id"]);
 $account_name = "";
 $account_type = "";
 
 $balance = account_balance($account_id, $conn, $account_name, $account_type);
 
-$result = "Error: No account";
+$output = "Error: No account";
 
 if (is_existed($account_id, $conn)) {
-	$result = ["account_id" => $account_id,"account_name" =>$account_name, "account_type" => $account_type,"balance" => $balance];
+	$output = ["account_id" => $account_id,"account_name" =>$account_name, "account_type" => $account_type,"balance" => $balance];
 }
 
-echo json_encode($result);
+echo json_encode($output);
 
 //echo json_encode(["message" => "User added successfully"]);
 
@@ -100,8 +104,6 @@ echo json_encode($result);
 //$hash = hash_hmac('sha256', $data,$key);
 
 //echo "SHA256 hash of '$data': " . $hash . "\n";	
-
-
 
 ?>
 
