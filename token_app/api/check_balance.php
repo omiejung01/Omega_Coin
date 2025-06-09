@@ -19,7 +19,6 @@ function is_existed($acc_id, $conn3) {
 	} else {
 		echo "Error preparing statement: " . $conn3->error;
 	}
-	
 	return $found;
 }
 
@@ -69,7 +68,7 @@ function account_balance($acc_id, $conn3,&$account_name,&$account_type) {
 	
 	$balance = 0;
 	
-	if ($account_type == "Asset") {
+	if ($account_type == "Assets") {
 		$balance = $to_amount - $from_amount;
 	} else {
 		$balance = $from_amount - $to_amount;
@@ -85,12 +84,14 @@ $account_id = htmlspecialchars($_GET["account_id"]);
 $account_name = "";
 $account_type = "";
 
-$balance = account_balance($account_id, $conn, $account_name, $account_type);
+//$balance = account_balance($account_id, $conn, $account_name, $account_type);
 
-$output = "Error: No account";
+$output = ["result" => "Error, No account"];
 
 if (is_existed($account_id, $conn)) {
+	$balance = account_balance($account_id, $conn, $account_name, $account_type);
 	$output = ["account_id" => $account_id,"account_name" =>$account_name, "account_type" => $account_type,"balance" => $balance];
+	
 }
 
 echo json_encode($output);
