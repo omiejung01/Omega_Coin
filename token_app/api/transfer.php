@@ -132,15 +132,15 @@ if (is_existed($from_account, $realm_id, $conn) && is_existed($to_account, $real
 			$allowed = true;
 		}
 	} else if (strcmp(substr($remarks,0,9),"Give away")==0) {
-		//$output = ["result" => "Cannot give away"];
+		$output = ["result" => "Cannot give away"];
 		
 		$to_account_type = '';
 		$from_account_type = '';
 		
-		account_balance($to_account, $conn, $account_name, $to_account_type);
-		account_balance($from_account, $conn, $account_name, $from_account_type);
+		account_balance($to_account,$realm_id, $conn, $account_name, $to_account_type);
+		account_balance($from_account,$realm_id, $conn, $account_name, $from_account_type);
 		
-		if ((strcmp($to_account_type,'Liabilities')==0)&&(strcmp($from_account_type,'Liabilities')==0)) {		
+		if ((strcmp($to_account_type,'Liabilities')==0)&&(strcmp($from_account_type,'Expenses')==0)) {		
 			$allowed = true;		
 		}
 	}
