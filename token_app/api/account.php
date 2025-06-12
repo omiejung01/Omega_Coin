@@ -1,10 +1,5 @@
 <?php
-require("../db.inc.php");
-require("account.php");
-//error_reporting(E_ALL);
-header("Content-Type: application/json");
 
-/*
 function is_existed($acc_id, $re_id, $conn3) {
 	
 	$sql3 = "SELECT account_id FROM account WHERE account_id LIKE ? AND realm_id LIKE ? AND void = 0";
@@ -78,38 +73,24 @@ function account_balance($acc_id, $re_id, $conn3,&$account_name,&$account_type) 
 	
 	return $balance;
 }
-*/
 
-//$output = ["result" => "Error2"];
-
-$account_id = htmlspecialchars($_GET["account_id"]);
-$realm_id = trim(htmlspecialchars($_GET["realm_id"]));
-
-
-$account_name = "";
-$account_type = "";
-
-//$balance = account_balance($account_id, $conn, $account_name, $account_type);
-
-$output = ["result" => "Error, No account"];
-
-if (is_existed($account_id, $realm_id, $conn)) {
-	$balance = account_balance($account_id,$realm_id, $conn, $account_name, $account_type);
-	$output = ["realm_id" => $realm_id ,"account_id" => $account_id,"account_name" =>$account_name, "account_type" => $account_type,"balance" => $balance];
+function is_duplicate($acc_name, $realm_id, $conn3) {
+	$sql3 = "SELECT account_id FROM account WHERE account_name LIKE ? AND realm_id = ? AND void = 0 ";
+	//print($sql3);
+	//$result3 = $conn3->query($sql3);
 	
+	$stmt3 = $conn3->prepare($sql3);
+	$stmt3->bind_param('ss', $acc_name, $realm_id);
+	$stmt3->execute();
+    $result3 = $stmt3->get_result();
+
+	$found = false;
+	if ($result3->num_rows > 0) {
+		$found = true;
+	}
+	$stmt3->close();
+		
+	return $found;
 }
 
-echo json_encode($output);
-
-//echo json_encode(["message" => "User added successfully"]);
-
-//$data = "Rex Lapis"; 
-//$key = "vagomundo";
-
-// Calculate the SHA256 hash
-//$hash = hash_hmac('sha256', $data,$key);
-
-//echo "SHA256 hash of '$data': " . $hash . "\n";	
-
 ?>
-

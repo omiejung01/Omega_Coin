@@ -1,9 +1,10 @@
 <?php
 require("../db.inc.php");
+require("account.php");
 //error_reporting(E_ALL);
 header("Content-Type: application/json");
 
-
+/*
 function is_existed($acc_id, $re_id, $conn3) {
 	
 	$sql3 = "SELECT account_id FROM account WHERE account_id LIKE ? AND realm_id LIKE ? AND void = 0";
@@ -78,7 +79,7 @@ function account_balance($acc_id, $re_id, $conn3,&$account_name,&$account_type) 
 	
 	return $balance;
 }
-
+*/
 
 $from_account = trim(htmlspecialchars($_GET["from_account"]));
 $to_account  = trim(htmlspecialchars($_GET["to_account"]));
