@@ -19,28 +19,6 @@ function fill_zero($number, $target) {
 	return $result . $number;
 }
 
-// Check duplication
-/*
-function is_duplicate($acc_name, $realm_id, $conn3) {
-	$sql3 = "SELECT account_id FROM account WHERE account_name LIKE ? AND realm_id = ? AND void = 0 ";
-	//print($sql3);
-	//$result3 = $conn3->query($sql3);
-	
-	$stmt3 = $conn3->prepare($sql3);
-	$stmt3->bind_param('ss', $acc_name, $realm_id);
-	$stmt3->execute();
-    $result3 = $stmt3->get_result();
-
-	$found = false;
-	if ($result3->num_rows > 0) {
-		$found = true;
-	}
-	$stmt3->close();
-		
-	return $found;
-}
-*/
-
 $account_name = trim(htmlspecialchars($_GET["account_name"]));
 $account_type = trim(htmlspecialchars($_GET["account_type"]));
 $remarks = trim(htmlspecialchars($_GET["remarks"]));
