@@ -65,7 +65,7 @@ function account_balance($acc_id, $re_id, $conn3,&$account_name,&$account_type) 
 	
 	$balance = 0;
 	
-	if ($account_type == "Assets") {
+	if (strcmp($account_type,"Assets")==0||strcmp($account_type,"Expenses")==0) {
 		$balance = $to_amount - $from_amount;
 	} else {
 		$balance = $from_amount - $to_amount;

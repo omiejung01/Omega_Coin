@@ -141,7 +141,7 @@ if (is_existed($from_account, $realm_id, $conn) && is_existed($to_account, $real
 		account_balance($to_account,$realm_id, $conn, $account_name, $to_account_type);
 		account_balance($from_account,$realm_id, $conn, $account_name, $from_account_type);
 		
-		if ((strcmp($to_account_type,'Liabilities')==0)&&(strcmp($from_account_type,'Expenses')==0)) {		
+		if ((strcmp($to_account_type,'Expenses')==0)&&(strcmp($from_account_type,'Liabilities')==0)) {		
 			$allowed = true;		
 		}
 	}
@@ -155,7 +155,7 @@ if (is_existed($from_account, $realm_id, $conn) && is_existed($to_account, $real
 		} else {
 			$stmt->bind_param("ississs", $id, $from_account, $to_account, $amount, $remarks, $realm_id, $_SERVER['REMOTE_ADDR']);
 			if ($stmt->execute()) {
-				$output = ["transfer_id" => $id, "result" => "Success"];
+				$output = ["transfer_id" => $id, "remarks" => $remarks, "result" => "Success"];
 			} else {
 				$output = ["result" =>  ("Error 2 " . $conn->error) , "id" => $id];
 			}
