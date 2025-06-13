@@ -8,16 +8,19 @@ $output = ["result" => "Lady Ningguang"];
 $account_id = trim(htmlspecialchars($_GET["account_id"]));
 $realm_id = trim(htmlspecialchars($_GET["realm_id"]));
 
-$from_date = trim(htmlspecialchars($_GET["from_date"]));
 $to_date = trim(htmlspecialchars($_GET["to_date"]));
+$from_date = trim(htmlspecialchars($_GET["from_date"]));
 
-$sql3 = "SELECT transfer_id, from_account, to_account, amount, remarks " .
-		"FROM transfer WHERE (to_account LIKE ? OR from_account LIKE ?) AND realm_id LIKE ? void = 0";
+$sql3 = "SELECT transfer_id,  account.account_name debit ,  a2.account_name credit, amount, transfer.remarks " .
+		"FROM transfer LEFT JOIN account on transfer.to_account = account.account_id " . 
+		"LEFT JOIN account a2 ON transfer.from_account = a2.account_id " .
+		"WHERE ((transfer.to_account LIKE ?) OR (transfer.from_account LIKE ?)) AND realm_id LIKE ? AND void = 0 " .
+		"ORDER BY transfer_id ";
 
 $data = array(); 		
-/*
-if ($stmt3 = $conn3->prepare($sql3)) {
-	$stmt3->bind_param("sss", $acc_id, $acc_id, $realm_id);
+
+if ($stmt3 = $conn->prepare($sql3)) {
+	$stmt3->bind_param("sss", $account_id, $account_id, $realm_id);
 	$stmt3->execute();
 	$result3 = $stmt3->get_result();
 	
@@ -30,6 +33,8 @@ if ($stmt3 = $conn3->prepare($sql3)) {
 	$output = ["result" => "Success", "ledger" => $data];
 	$stmt3->close();
 }
+
+/*
 
 $sql4 = "SELECT from_account, amount FROM transfer WHERE from_account LIKE ? AND void = 0";
 $from_amount = 0;
