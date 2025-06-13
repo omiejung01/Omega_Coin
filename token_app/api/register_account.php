@@ -81,11 +81,11 @@ if ($result->num_rows > 0) {
 
 $output = ["id" => $id, "result" => "Error3"];
 
-$sql2 = "INSERT INTO account (account_id,account_name,account_type,remarks,realm_id,email_account) VALUES (?,?,?,?,?,?);";
+$sql2 = "INSERT INTO account (account_id,account_name,account_type,remarks,realm_id,email_account, ip_address) VALUES (?,?,?,?,?,?,?);";
 
 
 $stmt2 = $conn->prepare($sql2);
-$stmt2->bind_param('ssssss', $id, $account_name, $account_type, $remarks, $realm_id, $email_account);
+$stmt2->bind_param('sssssss', $id, $account_name, $account_type, $remarks, $realm_id, $email_account, $_SERVER['REMOTE_ADDR']);
 
 if ($stmt2->execute()) {
 	$output = ["id" => $id, "result" => "Success"];

@@ -5,6 +5,7 @@ CREATE TABLE account (
   remarks varchar(2000) DEFAULT '',
   realm_id varchar(13) NOT NULL,
   email_account varchar(200) NOT NULL,
+  ip_address varchar(24) NOT NULL,
   created_by varchar(20) DEFAULT 'admin',
   created_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by varchar(20) DEFAULT 'admin',

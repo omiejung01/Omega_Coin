@@ -147,15 +147,15 @@ if (is_existed($from_account, $realm_id, $conn) && is_existed($to_account, $real
 	}
 	
 	if ($allowed) {
-		$sql2 = "INSERT INTO transfer (transfer_id, from_account, to_account, amount, remarks, realm_id) VALUES (?, ?, ?, ?, ?, ?)";
+		$sql2 = "INSERT INTO transfer (transfer_id, from_account, to_account, amount, remarks, realm_id, ip_address) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		$stmt = $conn->prepare($sql2);
 		if ($stmt === FALSE) {
 			$output = ["result" =>  ("Error 1 " . $conn->error )];
 		} else {
-			$stmt->bind_param("ississ", $id, $from_account, $to_account, $amount, $remarks, $realm_id);
+			$stmt->bind_param("ississs", $id, $from_account, $to_account, $amount, $remarks, $realm_id, $_SERVER['REMOTE_ADDR']);
 			if ($stmt->execute()) {
-				$output = ["id" => $id, "result" => "Success"];
+				$output = ["transfer_id" => $id, "result" => "Success"];
 			} else {
 				$output = ["result" =>  ("Error 2 " . $conn->error) , "id" => $id];
 			}
