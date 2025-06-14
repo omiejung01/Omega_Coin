@@ -30,6 +30,10 @@ Account table
 Transfer table
 
 Realm table
+realm_id
+name
+key 
+email_account
 
 
 # todo
