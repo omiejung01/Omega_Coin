@@ -1,5 +1,5 @@
 # Omega_Coin
-This is for in-app money. Omega coin
+This is for in-app money. Omega coin project
 
 # db.inc.php
 Please put this code in your chatapp/db.inc.php
@@ -28,6 +28,9 @@ if ($conn->connect_error) {
 Account table
 
 Transfer table
+to_account
+from_account
+
 
 Realm table
 realm_id
