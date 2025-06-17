@@ -93,4 +93,27 @@ function is_duplicate($acc_name, $realm_id, $conn3) {
 	return $found;
 }
 
+function get_account_id($email_account, $re_id, $conn3) {
+	
+	$sql3 = "SELECT account_id FROM account WHERE email_account LIKE ? AND realm_id LIKE ? AND void = 0";
+	$found = false; 
+	$result_account_id = '';
+
+	if ($stmt3 = $conn3->prepare($sql3)) {
+		$stmt3->bind_param("ss", $email_account, $re_id);
+		$stmt3->execute();
+		$result3 = $stmt3->get_result();
+		while ($row3 = $result3->fetch_assoc()) {
+			$result_account_id = $row3["account_id"];
+		}
+		
+		$stmt3->close();
+	} else {
+		echo "Error preparing statement: " . $conn3->error;
+	}
+	return $result_account_id;
+}
+
+
+
 ?>
