@@ -10,7 +10,8 @@ CREATE TABLE account (
   created_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by varchar(20) DEFAULT 'admin',
   updated_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  void int(11) DEFAULT 0
+  void int(11) DEFAULT 0,
+  PRIMARY KEY (account_id)
 );
 
 
@@ -25,7 +26,8 @@ CREATE TABLE realm (
   created_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by varchar(20) NOT NULL DEFAULT 'admin',
   updated_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  void int(11) NOT NULL DEFAULT 0
+  void int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (realm_id)
 );
 
 
@@ -41,7 +43,8 @@ CREATE TABLE transfer (
   created_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_by varchar(20) DEFAULT 'admin',
   updated_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  void int(11) DEFAULT 0
+  void int(11) DEFAULT 0,
+  PRIMARY KEY (transfer_id)
 );
 
 --

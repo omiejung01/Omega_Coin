@@ -63,7 +63,7 @@ if ($result->num_rows > 0) {
     	$id = $row["realm_id"];
   	}
 	
-	$id = substr($id,3);
+	$id = substr($id,5);
 	$num = intval($id);
 	$num += 1;
 	
