@@ -20,7 +20,7 @@ function is_existed($acc_id, $re_id, $conn3) {
 	return $found;
 }
 
-function account_balance($acc_id, $re_id, $conn3,&$account_name,&$account_type) {
+function account_balance($acc_id, $re_id, $conn3,&$account_name,&$account_type,&$account_remarks) {
 	$sql3 = "SELECT to_account, amount FROM transfer WHERE to_account LIKE ? AND realm_id LIKE ? AND void = 0";
 	$to_amount = 0;
 
@@ -58,7 +58,8 @@ function account_balance($acc_id, $re_id, $conn3,&$account_name,&$account_type) 
 		
 		while ($row5 = $result5->fetch_assoc()) {
 			$account_type= $row5["account_type"];
-			$account_name= $row5["account_name"];			
+			$account_name= $row5["account_name"];		
+			$account_remarks= $row5["account_remarks"];
 		}
 		$stmt5->close();	
 	}

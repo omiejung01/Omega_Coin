@@ -12,6 +12,8 @@ $realm_id = trim(htmlspecialchars($_GET["realm_id"]));
 
 $account_name = '';
 $account_type = '';
+$account_remarks = '';
+
 
 $output = ["result" => "Error, No account"];
 //
@@ -43,12 +45,13 @@ if (is_existed($from_account, $realm_id, $conn) && is_existed($to_account, $real
 	$allowed = false;
 	$output = ["result" => "Not allowed", "from_account" => $from_account , "remarks" => $remarks];
 
+	
 	if ((strcmp($remarks,"Initial")==0) && (strcmp($from_account,"ACC00000000001")==0)) {
 		$allowed = true;
 	} else if ((strcmp(substr($remarks,0,7),"Deposit")==0) && (strcmp($to_account,"ACC00000000002")==0)) {
 		$allowed = true;
 	} else if ((strcmp(substr($remarks,0,8),"Purchase")==0) || (strcmp(substr($remarks,0,8),"Withdraw")==0)) {
-		$balance = account_balance($to_account, $realm_id, $conn, $account_name, $account_type);
+		$balance = account_balance($to_account, $realm_id, $conn, $account_name, $account_type, $account_remarks);
 		// Purchase transaction: to_account => buyer, from_Account => seller		
 		if ($balance < $amount) {
 			$output = ["result" => "Not enough balance"];
@@ -61,8 +64,8 @@ if (is_existed($from_account, $realm_id, $conn) && is_existed($to_account, $real
 		$to_account_type = '';
 		$from_account_type = '';
 		
-		account_balance($to_account,$realm_id, $conn, $account_name, $to_account_type);
-		account_balance($from_account,$realm_id, $conn, $account_name, $from_account_type);
+		account_balance($to_account,$realm_id, $conn, $account_name, $to_account_type, $account_remarks);
+		account_balance($from_account,$realm_id, $conn, $account_name, $from_account_type, $account_remarks);
 		
 		if ((strcmp($to_account_type,'Expenses')==0)&&(strcmp($from_account_type,'Liabilities')==0)) {		
 			$allowed = true;		

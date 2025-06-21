@@ -21,6 +21,7 @@ $sql3 = "SELECT transfer_id,  account.account_name debit ,  a2.account_name cred
 $data = array(); 		
 $account_name = '';
 $account_type = '';
+$account_remarks = '';
 
 if ($stmt3 = $conn->prepare($sql3)) {
 	$stmt3->bind_param("sss", $account_id, $account_id, $realm_id);
@@ -33,7 +34,7 @@ if ($stmt3 = $conn->prepare($sql3)) {
 		$data[] = $row3;
 	}
 	
-	$balance = account_balance($account_id, $realm_id, $conn, $account_name, $account_type);
+	$balance = account_balance($account_id, $realm_id, $conn, $account_name, $account_type, $account_remarks);
 	
 	$output = ["result" => "Success", "account_name" => $account_name, 
 				"account_type" => $account_type, "ledger" => $data, "balance" => $balance ];
