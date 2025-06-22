@@ -50,7 +50,7 @@ function account_balance($acc_id, $re_id, $conn3,&$account_name,&$account_type,&
 	}
 	
 	//check account type
-	$sql5 = "SELECT account_id, account_type, account_name FROM account WHERE account_id LIKE ? AND realm_id LIKE ? AND void = 0 ";
+	$sql5 = "SELECT account_id, account_type, account_name, account_remarks FROM account WHERE account_id LIKE ? AND realm_id LIKE ? AND void = 0 ";
 	if ($stmt5 = $conn3->prepare($sql5)) {
 		$stmt5->bind_param("ss", $acc_id, $re_id);
 		$stmt5->execute();
