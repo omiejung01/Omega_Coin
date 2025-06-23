@@ -34,7 +34,7 @@ if ($stmt3 = $conn->prepare($sql3)) {
 		$data[] = $row3;
 	}
 	
-	$balance = account_balance($account_id, $realm_id, $conn, $account_name, $account_type, $account_remarks);
+	$balance = account_balance($account_id, $realm_id, $conn, $account_type, $account_name, $account_remarks);
 	
 	$output = ["result" => "Success", "account_name" => $account_name, 
 				"account_type" => $account_type, "ledger" => $data, "balance" => $balance ];
