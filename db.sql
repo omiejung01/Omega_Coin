@@ -32,7 +32,7 @@ CREATE TABLE realm (
 
 
 CREATE TABLE transfer (
-  transfer_id int(11) NOT NULL,
+  transfer_id int(16) NOT NULL,
   from_account varchar(50) NOT NULL,
   to_account varchar(50) NOT NULL,
   amount decimal(20,2) DEFAULT 0.00,
