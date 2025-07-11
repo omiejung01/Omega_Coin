@@ -1,4 +1,11 @@
 <?php
+class ActiveAccount {
+	$account_id,
+	$to_amount
+	$from_amount
+	
+}
+
 require("../db.inc.php");
 require("account.php");
 //error_reporting(E_ALL);
@@ -15,11 +22,13 @@ $realm_id = trim(htmlspecialchars($_GET["realm_id"]));
 //$account_remarks = '';
 
 
-$output = ["result" => "Error, No account"];
+//$output = ["result"];
+
+// list of active account
 
 
 
-echo json_encode($output);
-
+//echo json_encode($output);
+echo "editing";
 ?>
 
