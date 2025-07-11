@@ -20,8 +20,7 @@ function is_existed($acc_id, $re_id, $conn3) {
 	return $found;
 }
 
-function account_balance($acc_id, $re_id, $conn3, &$account_type,&$account_name,&$remarks) {
-	
+function account_balance($acc_id, $re_id, $conn3, &$account_type,&$account_name,&$remarks) {	
 			
 	$sql3 = "SELECT to_account, amount FROM transfer WHERE to_account LIKE ? AND realm_id LIKE ? AND void = 0";
 	$to_amount = 0;
