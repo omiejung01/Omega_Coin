@@ -5,6 +5,8 @@ error_reporting(E_ALL);
 header("Content-Type: application/json");
 
 $realm_id = trim(htmlspecialchars($_GET["realm_id"]));
+$give_away_account = "ACC00000000003"; // need to input this account
+
 
 class ThisAccount {
   public $account_id;
@@ -171,29 +173,34 @@ foreach ($list_result4 as $c) {
 		$id += 1;	
 		$stmt6->close();
 		
+		//$give_away_account
+		$this_amount = 1.0;
+		
+		//to_account=ACC00000000003&amount=8&remarks=Give away-202506241952
+		$this_remarks = "Give away-" . date('YmdHis');
+		
 		$sql2 = "INSERT INTO transfer (transfer_id, from_account, to_account, amount, remarks, realm_id, ip_address) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-		/*
+		
 		$stmt = $conn->prepare($sql2);
 		if ($stmt === FALSE) {
 			$output = ["result" =>  ("Error 1 " . $conn->error )];
 		} else {
-			$stmt->bind_param("ississs", $id, $from_account, $to_account, $amount, $remarks, $realm_id, $_SERVER['REMOTE_ADDR']);
+			$stmt->bind_param("ississs", $id, $c->account_id, $give_away_account, $this_amount, $this_remarks, $realm_id, $_SERVER['REMOTE_ADDR']);
 			if ($stmt->execute()) {
-				$output = ["transfer_id" => $id, "remarks" => $remarks, "result" => "Success"];
+				$output = ["transfer_id" => $id, "remarks" => $this_remarks, "result" => "Success"];
 			} else {
 				$output = ["result" =>  ("Error 2 " . $conn->error) , "id" => $id];
 			}
 			$stmt->close();
 		}
-		*/
-		
+		echo json_encode($output);
 	}
   }
 }
 
 
 //echo json_encode($output);
-echo "editing";
+//echo "editing";
 ?>
 
