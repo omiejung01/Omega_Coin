@@ -15,15 +15,15 @@ $last_time = str_replace("Give away-", "", $last_giveaway);
 
 $now = date('YmdHis');
 
+// 9 minutes 11:51:00 - 12:00:00 = 900
+$seconds = floatval($now) - floatval($last_time);
 
-
-
-
-
-//echo json_encode($output);
-echo "interval: " . (intval($now) - intval($last_time)) ;
-echo "now: " . $now;
-echo "last_time: " . $last_time;
+if ($seconds > 899) {
+	give_away($give_away_account_id, $realm_id, $conn);	
+} else {
+	$output = ["interval seconds" => $seconds];
+	echo json_encode($output);
+}
 
 ?>
 
