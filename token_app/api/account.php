@@ -302,24 +302,31 @@ function give_away($give_away_account, $realm_id, $conn3) {
 	}
 }
 
-function check_last_giveaway($realm_id, $conn3) {
-	$str_result = "";	
+function check_last_giveaway($this_realm_id, $conn3) {
+	$str_result = [];	
 	
-	$sql = "SELECT transfer_id, remarks AS max_id FROM transfer WHERE realm_id LIKE ? AND remarks LIKE ? AND void = 0 ";
+	$sql = "SELECT remarks FROM transfer WHERE realm_id = ? AND remarks LIKE ? AND void = 0 ORDER BY transfer_id DESC LIMIT 1 ";
+	$stmt = $conn3->prepare($sql);
 	
-	if ($stmt = $conn3->prepare($sql)) {
-	$stmt->bind_param("ss", $realm_id, "Give away-%");
-	$stmt->execute();
-	$result = $stmt->get_result();
-
-	while ($row = $result->fetch_assoc()) {
-		$str_result = $row["remarks"];
-	}	
-
-		$stmt->close();
+	
+	if ($stmt === FALSE) {
+		$str_result = ["result" => "Error 1 - Cannot get latest giveaway record"];	
 	} else {
-		echo "Error preparing statement: " . $conn3->error;
-	}
+		
+		$keyword = "Give away-%";
+		
+        $stmt->bind_param("ss", $this_realm_id, $keyword);
+        
+		$stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            $str_result = $row["remarks"];
+        }
+
+        $stmt->close();
+		
+    }
 	
 	return $str_result;
 }

@@ -58,10 +58,13 @@ if (is_existed($from_account, $realm_id, $conn) && is_existed($to_account, $real
 		
 	$output = ["result" => "Not allowed 02", "from_account_type" => $from_account_type];
 	if ((strcmp($remarks,"Initial")==0) && (strcmp($from_account_type,"Equity")==0)) {
+//		$output = ["result" => "Not allowed 02"];
 		$allowed = true;
 	} else if ((strcmp(substr($remarks,0,7),"Deposit")==0) && (strcmp($to_account_type,"Assets")==0)) {
 		$allowed = true;
 	} else if ((strcmp(substr($remarks,0,8),"Purchase")==0) || (strcmp(substr($remarks,0,8),"Withdraw")==0)) {
+		//$balance = account_balance($to_account, $realm_id, $conn, $account_name, $account_type, $account_remarks);
+		// Purchase transaction: to_account => buyer, from_Account => seller		
 		if ($balance < $amount) {
 			$output = ["result" => "Not enough balance"];
 		} else {
@@ -69,7 +72,13 @@ if (is_existed($from_account, $realm_id, $conn) && is_existed($to_account, $real
 		}
 	} else if (strcmp(substr($remarks,0,9),"Give away")==0) {
 		$output = ["result" => "Cannot give away"];
-				
+		
+		//$to_account_type = '';
+		//$from_account_type = '';
+		
+		//account_balance($to_account,$realm_id, $conn, $account_name, $to_account_type, $account_remarks);
+		//account_balance($from_account,$realm_id, $conn, $account_name, $from_account_type, $account_remarks);
+		
 		if ((strcmp($to_account_type,'Expenses')==0)&&(strcmp($from_account_type,'Liabilities')==0)) {		
 			$allowed = true;		
 		}
