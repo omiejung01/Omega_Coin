@@ -1,5 +1,5 @@
 # Omega_Coin
-This is for in-app money. Omega coin project. You can implement your own wallet application. Giveaway logic. 19
+This is for in-app money. Omega coin project. You can implement your own wallet application. Giveaway logic. 20
 
 # db.inc.php
 Please put this code in your chatapp/db.inc.php
