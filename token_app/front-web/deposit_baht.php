@@ -35,19 +35,19 @@
         <div class="px-6 py-8 text-center">
             <p class="text-gray-500 text-sm mb-2">Enter Amount</p>
             <div class="flex justify-center items-baseline gap-1">
-                <span class="text-3xl font-bold text-indigo-600">USD</span>
+                <span class="text-3xl font-bold text-indigo-600">THB</span>
 		
                 <input id="usd-input" type="number" placeholder="0.00" class="text-5xl font-bold text-gray-800 w-full text-center outline-none bg-transparent" autofocus>
             </div>
-			<div>
+			<!-- <div>
 				<span class="text-xl font-bold text-indigo-600">≈ <span id="thb-output">0.00</span> THB**</span>
-			</div>
+			</div> -->
         </div>
 
         <div class="flex justify-center gap-3 px-6 mb-8">
-            <button class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+$10</button>
-            <button class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+$50</button>
-            <button class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+$100</button>
+            <button class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿10</button>
+            <button class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿50</button>
+            <button class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿100</button>
         </div>
 
         <div class="px-6 flex-grow">
@@ -55,10 +55,10 @@
             
             <div class="flex items-center justify-between p-4 border-2 border-indigo-500 bg-indigo-50 rounded-2xl mb-3 cursor-pointer">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-xl">🏦</div>
+                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-xl">💵</div>
                     <div>
-                        <p class="font-bold text-gray-800">Chase Bank</p>
-                        <p class="text-xs text-indigo-600">Balance: $4,200.00</p>
+                        <p class="font-bold text-gray-800">Pay Solution Asia</p>
+                        <!-- <p class="text-xs text-indigo-600">Balance: $4,200.00</p> -->
                     </div>
                 </div>
                 <div class="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center">
@@ -67,9 +67,10 @@
                     </svg>
                 </div>
             </div>
-
-            <div class="flex items-center justify-between p-4 border border-gray-100 rounded-2xl hover:bg-gray-50 cursor-pointer transition-colors">
-                <div class="flex items-center gap-4">
+			
+			<div class="flex items-center justify-between p-4 border border-gray-100 rounded-2xl hover:bg-gray-50 cursor-pointer transition-colors">
+                <!--
+				<div class="flex items-center gap-4">
                     <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-xl">💳</div>
                     <div>
                         <p class="font-bold text-gray-800">Mastercard</p>
@@ -77,12 +78,15 @@
                     </div>
                 </div>
                 <div class="w-6 h-6 border-2 border-gray-200 rounded-full"></div>
-            </div>
+				-->
+            </div> 
         </div>
 		<div class="p-6">
+			<!--
 			<span class="w-6 h-6 text-sm font-bold text-gray-300">
 			** The above rate is an estimate. The actual rate will be provided by the payment gateway service provider at the time of purchase.
 			</span>
+			-->
 		</div>
         <div class="p-6">
             <button class="w-full bg-indigo-600 py-4 rounded-2xl text-white font-bold text-lg shadow-lg shadow-indigo-200 active:scale-95 transition-transform">
