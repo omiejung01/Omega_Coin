@@ -1,5 +1,5 @@
 <?php 
-	
+	/*
 	$url = "https://api.exchangerate-api.com/v4/latest/USD";
 	// Fetch the JSON response
 	$response = file_get_contents($url);
@@ -7,7 +7,7 @@
 	// Get the rate from the data array
 	$rate = $data['rates']['THB'];
 
-	$ex_rate = (float)$rate;
+	$ex_rate = (float)$rate; */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,7 @@
             <div class="flex justify-center items-baseline gap-1">
                 <span class="text-3xl font-bold text-indigo-600">THB</span>
 		
-                <input id="usd-input" type="number" placeholder="0.00" class="text-5xl font-bold text-gray-800 w-full text-center outline-none bg-transparent" autofocus>
+                <input id="thb-input" type="number" placeholder="0.00" class="text-5xl font-bold text-gray-800 w-full text-center outline-none bg-transparent" autofocus>
             </div>
 			<!-- <div>
 				<span class="text-xl font-bold text-indigo-600">≈ <span id="thb-output">0.00</span> THB**</span>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="flex justify-center gap-3 px-6 mb-8">
-            <button class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿10</button>
+            <button id="btnAdd10" class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿10</button>
             <button class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿50</button>
             <button class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿100</button>
         </div>
@@ -94,29 +94,43 @@
             </button>
         </div>
     </div>
-	<script>
-		const usdInput = document.getElementById('usd-input');
-		const thbOutput = document.getElementById('thb-output');
+	<script>		
 		
-		// Updated rate for Feb 2026
-		//const EXCHANGE_RATE = 31.14; 
-		const EXCHANGE_RATE = <?=$ex_rate ?>;
-
-		function updateConversion() {
-			//alert("Hello");
-			const usdValue = parseFloat(usdInput.value);
+		const thbInput = document.getElementById('thb-input');
+		const add10 = document.getElementById('btnAdd10');
+		
+		
+		thbInput.onchange = function(e) {
+			const thb = parseFloat(e.target.value) || 0;
 			
-			if (!isNaN(usdValue) && usdValue > 0) {
-				const converted = (usdValue * EXCHANGE_RATE).toLocaleString('en-US', {
-					minimumFractionDigits: 2,
-					maximumFractionDigits: 2
-				});
-				thbOutput.innerText = converted;
-			} else {
-				thbOutput.innerText = "0.00";
+			// Update the global variable
+			//thb_value = usd * RATE;
+			
+			// Update the UI
+			thbInput.value = thb.toLocaleString("en-GB", {
+				minimumFractionDigits: 2 
+			});
+			
+			console.log("Value finalized:", thbInput.innerText);
+		};
+		
+		function addMoney(amount) {
+			var thbInput = document.getElementById('thb-input');
+			myValue = parseFloat(thbInput.value);
+			if (isNaN(myValue)) {
+				myValue = 0.0;
 			}
+			myValue += amount;
+			thbInput.value = myValue.toLocaleString("en-GB", {
+				minimumFractionDigits: 2 
+			});
+			
 		}
-
+		
+		add10.onclick = function() {					
+			addMoney(10.00);
+		}
+		
 		/*
 		// Update whenever the user types
 		usdInput.addEventListener('input', updateConversion);
