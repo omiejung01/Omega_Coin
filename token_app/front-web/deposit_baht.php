@@ -117,6 +117,7 @@
 			}
 		}
 
+		/*
 		// Update whenever the user types
 		usdInput.addEventListener('input', updateConversion);
 
@@ -127,7 +128,7 @@
 				usdInput.value = val;
 				updateConversion();
 			});
-		});
+		}); */
 	</script>
 
 </body>
