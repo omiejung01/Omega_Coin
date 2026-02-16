@@ -1,7 +1,8 @@
 <?php 
 	$customer_email = "omiezenfone@gmail.com";
-	$product_detail = "product-0004";
-	$refnum = "000000000004";
+	$product_detail = "product-0005";
+	$refnum = "000000000005";
+	
 	/*
 	$url = "https://api.exchangerate-api.com/v4/latest/USD";
 	// Fetch the JSON response
@@ -23,7 +24,7 @@
     <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="bg-gray-100 min-h-screen flex justify-center items-center p-4">
-	<form method='post'>
+	<form method='post' action="https://payments.paysolutions.asia/payment">
 		<div class="w-full max-w-md bg-white min-h-[700px] shadow-2xl rounded-[3rem] overflow-hidden flex flex-col border-8 border-gray-900">
 			
 			<div class="p-6 flex items-center gap-4">
@@ -91,9 +92,7 @@
 				-->
 			</div>
 			<div class="p-6">
-				<button class="w-full bg-indigo-600 py-4 rounded-2xl text-white font-bold text-lg shadow-lg shadow-indigo-200 active:scale-95 transition-transform">
-					Confirm Deposit
-				</button>
+				<input type='submit' value='Confirm Deposit' class="w-full bg-indigo-600 py-4 rounded-2xl text-white font-bold text-lg shadow-lg shadow-indigo-200 active:scale-95 transition-transform" >
 			</div>
 		</div>
 		
@@ -101,6 +100,10 @@
         <input type="hidden" name="cc" value="00">
         <input type="hidden" id="value_total" name="total" value="1">        
         <input type="hidden" name="lang" value="EN">
+		<input type="hidden" name="customeremail" value="<?=$customer_email?>">
+		<input type="hidden" name="productdetail" value="<?=$product_detail?>">
+		<input type="hidden" name="refno" value="<?=$refnum?>">
+		
 	</form>
 	<script>		
 		
@@ -114,6 +117,7 @@
 		*/
 		
 		function inputChange() {
+			const value_total = document.getElementById('value_total');
 			const thbInput = document.getElementById('thb-input');
 			var thb = parseFloat(thbInput.value);
 			
@@ -124,6 +128,8 @@
 				minimumFractionDigits: 2 
 			});
 			value_total.value = thb;
+			
+			
 		
 			console.log("Value finalized:", thbInput.value);
 		
@@ -145,7 +151,7 @@
 		};
 		*/
 		function addMoney(amount) {
-			
+			var value_total = document.getElementById('value_total');
 			var thb_input = document.getElementById('thb-input');
 			//thbInput.blur();
 			//alert(thb_value);
