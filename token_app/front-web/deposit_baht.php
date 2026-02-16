@@ -23,7 +23,7 @@
     <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="bg-gray-100 min-h-screen flex justify-center items-center p-4">
-	<form>
+	<form method='post'>
 		<div class="w-full max-w-md bg-white min-h-[700px] shadow-2xl rounded-[3rem] overflow-hidden flex flex-col border-8 border-gray-900">
 			
 			<div class="p-6 flex items-center gap-4">
@@ -39,19 +39,19 @@
 				<p class="text-gray-500 text-sm mb-2">Enter Amount</p>
 				<div class="flex justify-center items-baseline gap-1">
 					<span class="text-3xl font-bold text-indigo-600">THB</span>		
-					<input id="thb-input" type="number" placeholder="0.00" class="text-5xl font-bold text-gray-800 w-full text-center outline-none bg-transparent" autofocus>
+					<input id="thb-input" onchange="inputChange()" type="number" placeholder="0.00" class="text-5xl font-bold text-gray-800 w-full text-center outline-none bg-transparent" autofocus>
 				</div>
 				<!-- <div>
 					<span class="text-xl font-bold text-indigo-600">≈ <span id="thb-output">0.00</span> THB**</span>
 				</div> -->
 			</div>
-
+			
 			<div class="flex justify-center gap-3 px-6 mb-8">
-				<button id="btnAdd10" class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿10</button>
-				<button id="btnAdd50" class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿50</button>
-				<button id="btnAdd100" class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors">+฿100</button>
+				<input type='button' id="btnAdd10" onclick="addMoney(10)" class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors" value='+฿10'>
+				<input type='button' id="btnAdd50" onclick="addMoney(50)" class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors" value='+฿50'>
+				<input type='button' id="btnAdd100" onclick="addMoney(100)" class="px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-indigo-50 hover:border-indigo-200 transition-colors" value='+฿100'>
 			</div>
-
+			
 			<div class="px-6 flex-grow">
 				<h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Select Source</h3>
 				
@@ -104,15 +104,32 @@
 	</form>
 	<script>		
 		
-		const thbInput = document.getElementById('thb-input');
-		const value_total = document.getElementById('value_total');
+		//const thbInput = document.getElementById('thb-input');
+		//const value_total = document.getElementById('value_total');
 		
+		/*
 		const add10 = document.getElementById('btnAdd10');
 		const add50 = document.getElementById('btnAdd50');
 		const add100 = document.getElementById('btnAdd100');
+		*/
 		
+		function inputChange() {
+			const thbInput = document.getElementById('thb-input');
+			var thb = parseFloat(thbInput.value);
+			
+			if (isNaN(thb)) {
+				thb = 0.0;
+			} 				
+			thbInput.value = thb.toLocaleString("en-GB", {
+				minimumFractionDigits: 2 
+			});
+			value_total.value = thb;
 		
-		thbInput.onchange = function(e) {
+			console.log("Value finalized:", thbInput.value);
+		
+		}
+		/*
+		thbInput.onblur = function(e) {
 			const thb = parseFloat(e.target.value) || 0;
 			
 			// Update the global variable
@@ -126,27 +143,32 @@
 			
 			console.log("Value finalized:", thbInput.innerText);
 		};
-		
+		*/
 		function addMoney(amount) {
-			var thbInput = document.getElementById('thb-input');
-			myValue = parseFloat(thbInput.value);
+			
+			var thb_input = document.getElementById('thb-input');
+			//thbInput.blur();
+			//alert(thb_value);
+			
+			myValue = parseFloat(thb_input.value);
 			
 			if (isNaN(myValue)) {
 				myValue = 0.0;
 			}
 			
 			myValue += amount;
-			thbInput.value = myValue.toLocaleString("en-GB", {
+			thb_input.value = myValue.toLocaleString("en-GB", {
 				minimumFractionDigits: 2 
 			});	
 
-			value_total.value = myValue;			
+			value_total.value = myValue;	
+				
 		}
 		
-		add10.onclick = function() {					
-			addMoney(10.00);
-		}
-		
+		//add10.onclick = function() {					
+		//	addMoney(10.00);
+		//}
+		/*
 		add50.onclick = function() {					
 			addMoney(50.00);
 		}
@@ -154,6 +176,7 @@
 		add100.onclick = function() {					
 			addMoney(100.00);
 		}
+		*/
 		
 		/*
 		// Update whenever the user types
@@ -163,7 +186,7 @@
 		document.querySelectorAll('.quick-chip').forEach(chip => {
 			chip.addEventListener('click', () => {
 				const val = chip.getAttribute('data-value');
-				usdInput.value = val;
+				usdInput.value                                                                                                                        = val;
 				updateConversion();
 			});
 		}); */
