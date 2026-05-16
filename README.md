@@ -1,5 +1,5 @@
 # Omega_Coin
-This is for in-app money. Omega coin project. You can implement your own wallet application. Front-64
+This is for in-app money. Omega coin project. You can implement your own wallet application. Front-65
 
 # db.inc.php
 Please put this code in your chatapp/db.inc.php
@@ -42,9 +42,4 @@ email_account
 # todo
 Profile picture with media server, and upload panel to media server. Create group chat only one-to-one
 
-
-                                    
-                                    
-ห้างหุ้นส่วนจำกัด อาร์.โอ.เอ็ม. อินเตอร์เทรด
-0103530029601
 
