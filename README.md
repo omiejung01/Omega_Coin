@@ -1,5 +1,5 @@
 # Omega_Coin
-This is for in-app money. Omega coin project. You can implement your own wallet application. Front-78
+This is for in-app money. Omega coin project. You can implement your own wallet application. Front-79
 
 # db.inc.php
 Please put this code in your chatapp/db.inc.php
@@ -41,18 +41,5 @@ email_account
 
 # todo
 Profile picture with media server, and upload panel to media server. Create group chat only one-to-one
-
-
-0016A00000067701011201150105538091073030204250403041.50
-
-0016A0000006770101120115010553809107303020425040307MAY2026
-
-00020101021230550016A00000067701011201150105538091073030204250403041.5053037645802TH630485FA
-
-00020101021230580016A0000006770101120115010553809107303020425040307MAY2026530376454041.505802TH63048836
-
-00020101021230550016A00000067701011201150105538091073030204250403041.50530376454041.505802TH6304477D
-
-
 
 
